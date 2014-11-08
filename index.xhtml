@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <title>Mouse</title>
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+        <!-- COMMON LIBS -->
+        <script type="text/javascript" src="js/common/jquery.js"></script>
+        <script type="text/javascript" src="js/common/underscore.js"></script>
+
+        <!-- mouse -->
+        <script type="text/javascript" src="js/libs/mouse.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                context.fillStyle = "#109bfc";
+                context.strokeStyle = "orange";
+                context.lineWidth = 1;
+
+                Common = {};
+                Common['Mouse'] = new Mouse({
+                    'eventsTarget': $('#canvas')[0],
+                    'handlers': {
+                        'leftClick': function(event) {
+                            console.log('leftClick');
+                        },
+                        'leftDoubleClick': function(event) {
+                            console.log('leftDoubleClick');
+                        },
+                        'rightClick': function(event) {
+                            console.log('rightClick');
+                        },
+                        'rightDoubleClick': function(event) {
+                            console.log('rightDoubleClick');
+                        },
+                        'centerClick': function(event) {
+                            console.log('centerClick');
+                        },
+                        'centerDoubleClick': function(event) {
+                            console.log('centerDoubleClick');
+                        },
+                        'frameComplete': function(frame) {
+                            console.log(frame);
+                            context.clearRect(0,0,1000,1000);
+                        },
+                        'frameDeleted': function(frame) {
+                            context.clearRect(0,0,1000,1000);
+                        },
+                        'frameSizeChange': function(frame) {
+                            context.clearRect(0,0,1000,1000);
+                            context.strokeRect(
+                                frame['beginX'],
+                                frame['beginY'],
+                                frame['endX'] - frame['beginX'],
+                                frame['endY'] - frame['beginY']
+                            );
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <canvas id="canvas" width="800" height="400"></canvas>
+    </body>
+</html>
